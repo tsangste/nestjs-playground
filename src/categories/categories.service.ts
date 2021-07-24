@@ -39,6 +39,6 @@ export class CategoriesService {
   }
 
   async remove(id: string): Promise<Category> {
-    return this.categoryModel.remove({ _id: new ObjectID(id) }).exec();
+    return this.categoryModel.findByIdAndDelete(new ObjectID(id)).exec();
   }
 }

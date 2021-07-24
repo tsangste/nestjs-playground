@@ -18,7 +18,7 @@ describe('CategoriesService', () => {
     find: () => ({ exec: spyFind.mockResolvedValue([]) }),
     findOne: () => ({ exec: spyFindOne.mockResolvedValue({}) }),
     updateOne: () => ({ exec: spyUpdateOne.mockResolvedValue({}) }),
-    remove: () => ({ exec: spyRemove.mockResolvedValue({}) }),
+    findByIdAndDelete: () => ({ exec: spyRemove.mockResolvedValue({}) }),
   };
 
   beforeEach(async () => {
@@ -56,9 +56,9 @@ describe('CategoriesService', () => {
     expect(model.findOne().exec).toHaveBeenCalled();
   });
 
-  it('remove', async () => {
+  it('delete', async () => {
     await service.remove('60fc19fc6e92660020ea8653');
 
-    expect(model.remove().exec).toHaveBeenCalled();
+    expect(model.findByIdAndDelete().exec).toHaveBeenCalled();
   });
 });

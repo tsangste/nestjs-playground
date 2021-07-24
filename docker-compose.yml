@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  nest:
+    build:
+      context: .
+      dockerfile: ./debug/Dockerfile
+    restart: always
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - 9229:9229
+      - 3000:3000
+
+  mongo:
+    image: library/mongo:4.0.24
+    restart: always
+    volumes:
+      - mongo_store:/data/db
+
+volumes:
+  mongo_store:

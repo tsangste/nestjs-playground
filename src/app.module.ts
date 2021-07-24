@@ -6,7 +6,10 @@ import { AppService } from './app.service';
 import { CategoriesModule } from './categories/categories.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://mongo:27017'), CategoriesModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://mongo:27017/nest'),
+    CategoriesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,4 +1,4 @@
-FROM node:14.17.0-slim
+FROM node:14.17.5-alpine
 
 ENV APPDIR /usr/app
 
@@ -9,6 +9,6 @@ WORKDIR ${APPDIR}
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm install
+RUN npm ci
 
 CMD ["npm", "run", "start:debug"]

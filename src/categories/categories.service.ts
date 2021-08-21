@@ -5,6 +5,7 @@ import { EntityManager } from '@mikro-orm/core'
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { ViewCategoryDto } from './dto/view-category.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -25,19 +26,26 @@ export class CategoriesService {
     return createdCat;
   }
 
-  async findAll(): Promise<Category[]> {
+  async findAll(): Promise<ViewCategoryDto[]> {
     this.logger.debug('Find All Categories');
 
-    return this.em.find(Category, {});
+    return (await this.em.find(Category, {})).map(c =>
+      ViewCategoryDto.fromEntity(c),
+    );
   }
 
-  async findOne(id: string): Promise<Category> {
+  async findOne(id: string): Promise<ViewCategoryDto> {
     this.logger.debug({
       message: 'Find Category',
       id: id,
     });
 
-    return this.em.findOne(Category, { id });
+    const entity = await this.em
+      .findOne(Category, { id });
+
+    if (entity) {
+      return ViewCategoryDto.fromEntity(entity);
+    }
   }
 
   async update(

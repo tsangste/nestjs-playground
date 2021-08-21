@@ -14,7 +14,7 @@ export class Product {
   description: string;
 
   @Prop()
-  color: string;
+  colour: string;
 
   @Prop()
   stock: number;

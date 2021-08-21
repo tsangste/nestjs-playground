@@ -1,26 +1,74 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+
+import { Model } from 'mongoose';
+import { ObjectID } from 'mongodb';
+
+import { Product, ProductDocument } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ViewProductDto } from './dto/view-product.dto';
 
 @Injectable()
 export class ProductsService {
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+    @Inject(Logger) private readonly logger: LoggerService,
+  ) {}
+
   create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+    this.logger.debug({
+      message: 'save product',
+      product: createProductDto,
+    });
+
+    const createProd = new this.productModel(createProductDto);
+    return createProd.save();
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll() {
+    this.logger.debug('Find All Products');
+
+    return (await this.productModel.find().exec()).map(p =>
+      ViewProductDto.fromEntity(p),
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    this.logger.debug({
+      message: 'Find Product',
+      id: id,
+    });
+
+    const product = await this.productModel
+      .findOne({ _id: new ObjectID(id) })
+      .exec();
+
+    if (product) {
+      return ViewProductDto.fromEntity(product);
+    }
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    this.logger.debug({
+      message: 'Update Product',
+      id: id,
+      product: updateProductDto,
+    });
+
+    await this.productModel
+      .updateOne({ _id: new ObjectID(id) }, updateProductDto)
+      .exec();
+
+    return this.productModel.findOne({ _id: new ObjectID(id) }).exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    this.logger.debug({
+      message: 'Delete Category',
+      id: id,
+    });
+
+    return this.productModel.findByIdAndDelete(new ObjectID(id)).exec();
   }
 }

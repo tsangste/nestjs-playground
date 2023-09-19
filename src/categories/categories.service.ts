@@ -1,18 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 
-import { Model } from 'mongoose';
-import { ObjectID } from 'mongodb';
+import { EntityManager } from '@mikro-orm/core'
 
-import { Category, CategoryDocument } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
     @Inject(Logger) private readonly logger: LoggerService,
+    private readonly em: EntityManager,
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
@@ -21,14 +19,16 @@ export class CategoriesService {
       category: createCategoryDto,
     });
 
-    const createdCat = new this.categoryModel(createCategoryDto);
-    return createdCat.save();
+    const createdCat = this.em.create(Category, createCategoryDto);
+    await this.em.flush();
+
+    return createdCat;
   }
 
   async findAll(): Promise<Category[]> {
     this.logger.debug('Find All Categories');
 
-    return this.categoryModel.find().exec();
+    return this.em.find(Category, {});
   }
 
   async findOne(id: string): Promise<Category> {
@@ -37,7 +37,7 @@ export class CategoriesService {
       id: id,
     });
 
-    return this.categoryModel.findOne({ _id: new ObjectID(id) }).exec();
+    return this.em.findOne(Category, { id });
   }
 
   async update(
@@ -50,19 +50,20 @@ export class CategoriesService {
       category: updateCategoryDto,
     });
 
-    await this.categoryModel
-      .updateOne({ _id: new ObjectID(id) }, updateCategoryDto)
-      .exec();
+    const category = await this.findOne(id)
+    this.em.assign(category, updateCategoryDto)
+    await this.em.flush()
 
-    return this.categoryModel.findOne({ _id: new ObjectID(id) }).exec();
+    return category;
   }
 
-  async remove(id: string): Promise<Category> {
+  async remove(id: string): Promise<void> {
     this.logger.debug({
       message: 'Delete Category',
       id: id,
     });
 
-    return this.categoryModel.findByIdAndDelete(new ObjectID(id)).exec();
+    const category = await this.findOne(id)
+    return this.em.removeAndFlush(category);
   }
 }

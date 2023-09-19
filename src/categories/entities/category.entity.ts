@@ -1,16 +1,17 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Entity, PrimaryKey, Property, SerializedPrimaryKey } from '@mikro-orm/core'
+import { ObjectId } from '@mikro-orm/mongodb'
 
-import { Document } from 'mongoose';
-
-export type CategoryDocument = Category & Document;
-
-@Schema({ timestamps: true })
+@Entity()
 export class Category {
-  @Prop({ required: true })
-  name: string;
+  @PrimaryKey()
+  _id: ObjectId
 
-  @Prop()
-  description: string;
+  @SerializedPrimaryKey()
+  id!: string
+
+  @Property()
+  name: string
+
+  @Property({ nullable: true })
+  description?: string
 }
-
-export const CategorySchema = SchemaFactory.createForClass(Category);

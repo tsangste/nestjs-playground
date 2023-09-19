@@ -1,15 +1,16 @@
 import { Logger, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+
+import { MikroOrmModule } from '@mikro-orm/nestjs'
 
 import { CategoriesService } from './categories.service';
 import { CategoriesController } from './categories.controller';
-import { Category, CategorySchema } from './entities/category.entity';
+import { Category } from './entities/category.entity';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Category.name, schema: CategorySchema },
-    ]),
+    MikroOrmModule.forFeature({
+      entities: [Category],
+    }),
   ],
   controllers: [CategoriesController],
   providers: [Logger, CategoriesService],

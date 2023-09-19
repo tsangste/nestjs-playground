@@ -1,7 +1,8 @@
 import { Logger, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
-import * as meanieMongooseToJson from 'meanie-mongoose-to-json';
+import { MikroOrmModule } from '@mikro-orm/nestjs'
+import { defineConfig } from '@mikro-orm/mongodb'
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,10 +10,24 @@ import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongo:27017/nest', {
-      connectionFactory: connection => {
-        connection.plugin(meanieMongooseToJson);
-        return connection;
+    ConfigModule.forRoot({
+      cache: true,
+      ignoreEnvFile: false,
+      isGlobal: true,
+    }),
+    MikroOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          ...defineConfig({
+            dbName: configService.get<string>('MONGODB_DATABASE', 'nest'),
+            clientUrl: configService.get<string>('MONGODB_CONNECTION_STRING', 'mongodb://127.0.0.1:27017'),
+            ensureIndexes: true,
+            driverOptions: { ignoreUndefined: true },
+            debug: configService.get<string>('NODE_ENV', 'local') !== 'production',
+          }),
+          autoLoadEntities: true,
+        }
       },
     }),
     CategoriesModule,

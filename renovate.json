@@ -33,7 +33,20 @@
     },
     {
       "groupName": "node.js",
-      "extends": ["group:nodeJs"],
+      "commitMessageTopic": "Node.js",
+      "excludePackageNames": [
+        "calico/node",
+        "kindest/node"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchDepNames": [
+        "node"
+      ],
+      "matchPackagePatterns": [
+        "/node$"
+      ],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }

@@ -2,7 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    ":label(dependencies)"
+    ":label(dependencies)",
+    "group:jsTest",
+    "group:linters"
   ],
   "packageRules": [
     {
@@ -18,8 +20,16 @@
       "labels": ["breaking"]
     },
     {
-      "extends": "packages:linters",
-      "groupName": "linters"
+      "groupName": "mikro-orm",
+      "matchPackagePrefixes": ["@mikro-orm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "groupName": "mikro-orm",
+      "matchPackagePrefixes": ["@mikro-orm"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["breaking"]
     }
   ]
 }

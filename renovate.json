@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    ":label(dependencies)"
+    ":label(dependencies)",
+    "packages:linters"
   ],
   "packageRules": [
     {

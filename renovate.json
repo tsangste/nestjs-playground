@@ -39,7 +39,8 @@
         "kindest/node"
       ],
       "matchDatasources": [
-        "docker"
+        "docker",
+        "npm"
       ],
       "matchDepNames": [
         "node"

@@ -30,6 +30,12 @@
       "matchPackagePrefixes": ["@mikro-orm"],
       "matchUpdateTypes": ["major"],
       "labels": ["breaking"]
+    },
+    {
+      "groupName": "node.js",
+      "extends": ["group:nodeJs"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }

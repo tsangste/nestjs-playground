@@ -45,6 +45,11 @@
     },
     {
       "matchPackagePatterns": ["*"],
+      "matchDepTypes": ["dependencies"],
+      "excludePackagePrefixes": [
+        "@nestjs",
+        "@mikro-orm"
+      ],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
@@ -53,6 +58,11 @@
     },
     {
       "matchPackagePatterns": ["*"],
+      "matchDepTypes": ["dependencies"],
+      "excludePackagePrefixes": [
+        "@nestjs",
+        "@mikro-orm"
+      ],
       "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "breaking"]
     }

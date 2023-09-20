@@ -32,24 +32,29 @@
       "labels": ["breaking"]
     },
     {
-      "groupName": "node.js",
-      "commitMessageTopic": "Node.js",
-      "excludePackageNames": [
-        "calico/node",
-        "kindest/node"
-      ],
-      "matchDatasources": [
-        "docker",
-        "npm"
-      ],
-      "matchDepNames": [
-        "node"
-      ],
-      "matchPackagePatterns": [
-        "/node$"
-      ],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": [ "minor", "patch"],
+      "groupName": "devDependencies",
       "automerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "devDependencies",
+      "labels": ["breaking"]
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "automerge": true,
+      "labels": ["dependencies"]
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "breaking"]
     }
   ]
 }

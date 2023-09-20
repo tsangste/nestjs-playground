@@ -1,6 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended",
+    ":label(dependencies)"
+  ],
+  "packageRules": [
+    {
+      "groupName": "nestjs",
+      "matchPackagePrefixes": ["@nestjs"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "groupName": "nestjs",
+      "matchPackagePrefixes": ["@nestjs"],
+      "matchUpdateTypes": ["major"],
+      "labels": ["breaking"]
+    }
   ]
 }

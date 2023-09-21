@@ -34,11 +34,19 @@
     {
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": [ "minor", "patch"],
+      "excludePackagePrefixes": [
+        "@nestjs",
+        "@mikro-orm"
+      ],
       "groupName": "devDependencies",
       "automerge": true
     },
     {
       "matchDepTypes": ["devDependencies"],
+      "excludePackagePrefixes": [
+        "@nestjs",
+        "@mikro-orm"
+      ],
       "matchUpdateTypes": ["major"],
       "groupName": "devDependencies",
       "labels": ["breaking"]

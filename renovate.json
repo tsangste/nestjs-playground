@@ -38,6 +38,10 @@
         "@nestjs",
         "@mikro-orm"
       ],
+      "excludePackagePatterns": [
+        "^eslint",
+        "^jest"
+      ],
       "groupName": "devDependencies",
       "automerge": true
     },
@@ -46,6 +50,10 @@
       "excludePackagePrefixes": [
         "@nestjs",
         "@mikro-orm"
+      ],
+      "excludePackagePatterns": [
+        "^eslint",
+        "^jest"
       ],
       "matchUpdateTypes": ["major"],
       "groupName": "devDependencies",
@@ -57,6 +65,10 @@
       "excludePackagePrefixes": [
         "@nestjs",
         "@mikro-orm"
+      ],
+      "excludePackagePatterns": [
+        "^eslint",
+        "^jest"
       ],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
@@ -70,6 +82,10 @@
       "excludePackagePrefixes": [
         "@nestjs",
         "@mikro-orm"
+      ],
+      "excludePackagePatterns": [
+        "^eslint",
+        "^jest"
       ],
       "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "breaking"]

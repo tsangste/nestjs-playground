@@ -18,7 +18,7 @@ services:
       - '3000:3000'
 
   mongo:
-    image: library/mongo:4.0.24
+    image: library/mongo:4.4.24
     restart: always
     volumes:
       - mongo_store:/data/db

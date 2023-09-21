@@ -9,7 +9,6 @@ RUN mkdir -p ${APPDIR}
 
 WORKDIR ${APPDIR}
 
-COPY ${NPMRC_FILE_NAME} .npmrc
 COPY package*.json ./
 
 RUN npm ci
@@ -43,10 +42,9 @@ WORKDIR ${APPDIR}
 
 USER node
 
-COPY --from=build --chown=node:node ${APPDIR}/${NPMRC_FILE_NAME} .npmrc
 COPY --from=build --chown=node:node ${APPDIR}/package*.json ./
 
-RUN npm ci --omit=dev && rm -f .npmrc
+RUN npm ci --omit=dev
 
 COPY --from=build --chown=node:node ${APPDIR}/dist ./dist
 

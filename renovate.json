@@ -84,19 +84,36 @@
       ],
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch",
+      "groupSlug": "all-minor-patch-dependencies",
       "automerge": true,
       "labels": ["dependencies"]
     },
     {
       "matchPackagePatterns": ["*"],
       "matchDepTypes": ["dependencies"],
+      "groupName": "all major dependencies",
+      "groupSlug": "all-major-dependencies",
+      "matchUpdateTypes": ["major"],
       "excludePackagePrefixes": [
         "@nestjs",
         "@mikro-orm"
       ],
-      "matchUpdateTypes": ["major"],
       "labels": ["dependencies", "breaking"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major actions",
+      "groupSlug": "all-minor-patch-actions",
+      "automerge": true,
+      "labels": ["actions"]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "all major actions",
+      "groupSlug": "all-major-actions",
+      "labels": ["actions", "breaking"]
     }
   ]
 }

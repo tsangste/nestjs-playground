@@ -33,9 +33,9 @@
     "class-validator": "^0.14.0",
     "nest-winston": "^1.6.4",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.0",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.1.6",
+    "swagger-ui-express": "^5.0.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {

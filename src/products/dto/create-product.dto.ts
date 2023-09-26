@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsMongoId, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -23,7 +23,6 @@ export class CreateProductDto {
   @ApiProperty()
   price: number;
 
-  @IsMongoId()
   @ApiProperty()
   category_id: string;
 }

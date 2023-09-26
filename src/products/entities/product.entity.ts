@@ -1,29 +1,40 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger'
 
-import * as mongoose from 'mongoose';
-import { Category } from '../../categories/entities/category.entity';
+import { Entity, ManyToOne, PrimaryKey, Property, Ref, SerializedPrimaryKey } from '@mikro-orm/core'
+import { ObjectId } from '@mikro-orm/mongodb'
 
-export type ProductDocument = Product & mongoose.Document;
+import { Category } from '../../categories/entities/category.entity'
 
-@Schema({ timestamps: true })
+@Entity()
 export class Product {
-  @Prop()
-  name: string;
+  @PrimaryKey({ hidden: true })
+  _id: ObjectId
 
-  @Prop()
-  description: string;
+  @ApiProperty()
+  @SerializedPrimaryKey()
+  id!: string
 
-  @Prop()
-  colour: string;
+  @ApiProperty()
+  @Property()
+  name: string
 
-  @Prop()
-  stock: number;
+  @ApiProperty()
+  @Property()
+  description: string
 
-  @Prop()
-  price: number;
+  @ApiProperty()
+  @Property()
+  colour: string
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
-  category: Category;
+  @ApiProperty()
+  @Property()
+  stock: number
+
+  @ApiProperty()
+  @Property()
+  price: number
+
+  @ApiProperty()
+  @ManyToOne(() => Category, { ref: true })
+  category: Ref<Category>
 }
-
-export const ProductSchema = SchemaFactory.createForClass(Product);

@@ -1,11 +1,10 @@
 import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 
-import { EntityManager } from '@mikro-orm/core'
+import { EntityManager, wrap } from '@mikro-orm/core'
 
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { ViewCategoryDto } from './dto/view-category.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -14,7 +13,7 @@ export class CategoriesService {
     private readonly em: EntityManager,
   ) {}
 
-  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+  async create(createCategoryDto: CreateCategoryDto) {
     this.logger.debug({
       message: 'save category',
       category: createCategoryDto,
@@ -23,18 +22,16 @@ export class CategoriesService {
     const createdCat = this.em.create(Category, createCategoryDto);
     await this.em.flush();
 
-    return createdCat;
+    return wrap(createdCat).toObject();
   }
 
-  async findAll(): Promise<ViewCategoryDto[]> {
+  async findAll() {
     this.logger.debug('Find All Categories');
 
-    return (await this.em.find(Category, {})).map(c =>
-      ViewCategoryDto.fromEntity(c),
-    );
+    return (await this.em.find(Category, {})).map(c => wrap(c).toObject());
   }
 
-  async findOne(id: string): Promise<ViewCategoryDto> {
+  async findOne(id: string) {
     this.logger.debug({
       message: 'Find Category',
       id: id,
@@ -44,14 +41,14 @@ export class CategoriesService {
       .findOne(Category, { id });
 
     if (entity) {
-      return ViewCategoryDto.fromEntity(entity);
+      return wrap(entity).toObject();
     }
   }
 
   async update(
     id: string,
     updateCategoryDto: UpdateCategoryDto,
-  ): Promise<Category> {
+  ) {
     this.logger.debug({
       message: 'Update Category',
       id: id,

@@ -1,37 +1,34 @@
 import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 
-import { Model } from 'mongoose';
-import { ObjectID } from 'mongodb';
+import { EntityManager, wrap } from '@mikro-orm/core'
 
-import { Product, ProductDocument } from './entities/product.entity';
+import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ViewProductDto } from './dto/view-product.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
     @Inject(Logger) private readonly logger: LoggerService,
+    private readonly em: EntityManager,
   ) {}
 
-  create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto) {
     this.logger.debug({
       message: 'save product',
       product: createProductDto,
     });
 
-    const createProd = new this.productModel(createProductDto);
-    return createProd.save();
+    const createdProd = this.em.create(Product, createProductDto);
+    await this.em.flush();
+
+    return wrap(createdProd).toObject()
   }
 
   async findAll() {
     this.logger.debug('Find All Products');
 
-    return (await this.productModel.find().exec()).map(p =>
-      ViewProductDto.fromEntity(p),
-    );
+    return (await this.em.find(Product, {})).map(c => wrap(c).toObject());
   }
 
   async findOne(id: string) {
@@ -40,12 +37,11 @@ export class ProductsService {
       id: id,
     });
 
-    const product = await this.productModel
-      .findOne({ _id: new ObjectID(id) })
-      .exec();
+    const entity = await this.em
+      .findOne(Product, { id });
 
-    if (product) {
-      return ViewProductDto.fromEntity(product);
+    if (entity) {
+      return wrap(entity).toObject();
     }
   }
 
@@ -56,19 +52,20 @@ export class ProductsService {
       product: updateProductDto,
     });
 
-    await this.productModel
-      .updateOne({ _id: new ObjectID(id) }, updateProductDto)
-      .exec();
+    const product = await this.findOne(id)
+    this.em.assign(Product, updateProductDto as any)
+    await this.em.flush()
 
-    return this.productModel.findOne({ _id: new ObjectID(id) }).exec();
+    return product;
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     this.logger.debug({
       message: 'Delete Category',
       id: id,
     });
 
-    return this.productModel.findByIdAndDelete(new ObjectID(id)).exec();
+    const product = await this.findOne(id)
+    return this.em.removeAndFlush(product);
   }
 }

@@ -1,4 +1,4 @@
-ARG IMAGE=node:16.20.2-alpine
+ARG IMAGE=node:20.7.0-alpine
 
 ### STAGE Restore ###
 FROM $IMAGE as base

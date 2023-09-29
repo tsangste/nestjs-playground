@@ -1,9 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>tsangste/renovate-config",
-    "local>tsangste/renovate-config:nestjs",
-    "local>tsangste/renovate-config:mikro-orm",
-    "local>tsangste/renovate-config:github-actions"
+    "local>tsangste/renovate-configs",
+    "local>tsangste/renovate-configs:nestjs",
+    "local>tsangste/renovate-configs:mikro-orm",
+    "local>tsangste/renovate-configs:github-actions"
   ]
 }

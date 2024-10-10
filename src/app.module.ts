@@ -1,12 +1,12 @@
-import { Logger, Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { defineConfig } from '@mikro-orm/mongodb'
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CategoriesModule } from './categories/categories.module';
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { CategoriesModule } from './categories/categories.module'
 
 @Module({
   imports: [

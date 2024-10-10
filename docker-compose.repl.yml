@@ -1,0 +1,12 @@
+services:
+  app:
+    command: run repl:debug:local
+    container_name: 'app-repl'
+    stdin_open: true
+    tty: true
+    environment:
+      - LOG_LEVEL=debug
+      - MONGODB_CONNECTION_STRING=mongodb://host.docker.internal:21337
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules

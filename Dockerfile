@@ -1,7 +1,7 @@
 ARG IMAGE=node:18.20.4-alpine
 
 ### STAGE Restore ###
-FROM $IMAGE as base
+FROM $IMAGE AS base
 
 ENV APPDIR /usr/app
 
@@ -16,12 +16,12 @@ RUN npm ci
 COPY . .
 
 ### STAGE Commands ###
-FROM base as command
+FROM base AS command
 
 ENTRYPOINT ["npm"]
 
 ### STAGE Build ###
-FROM base as build
+FROM base AS build
 
 RUN npm run build
 

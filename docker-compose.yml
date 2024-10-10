@@ -1,29 +1,5 @@
-version: '3.4'
-
 services:
   app:
     build:
       context: .
       target: command
-    command: run start:debug
-    restart: always
-    environment:
-      - LOG_LEVEL=debug
-      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
-    volumes:
-      - .:/usr/app
-      - /usr/app/node_modules
-    ports:
-      - '9229:9229'
-      - '3000:3000'
-
-  mongo:
-    image: library/mongo:8.0.0
-    restart: always
-    volumes:
-      - mongo_store:/data/db
-    ports:
-      - '21337:27017'
-
-volumes:
-  mongo_store:

@@ -1,0 +1,13 @@
+services:
+  app:
+    command: run start:debug:local
+    restart: always
+    environment:
+      - LOG_LEVEL=debug
+      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - '9229:9229'
+      - '3000:3000'

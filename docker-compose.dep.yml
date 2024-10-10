@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: library/mongo:8.0.0
+    restart: always
+    volumes:
+      - mongo_store:/data/db
+    ports:
+      - '21337:27017'
+
+volumes:
+  mongo_store:

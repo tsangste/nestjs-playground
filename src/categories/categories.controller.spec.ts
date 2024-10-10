@@ -1,14 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing'
 import { Logger } from '@nestjs/common'
 
-import { CategoriesController } from './categories.controller';
-import { CategoriesService } from './categories.service';
+import { CategoriesController } from './categories.controller'
+import { CategoriesService } from './categories.service'
 import { EntityManager, MikroORM } from '@mikro-orm/core'
 import { defineConfig } from '@mikro-orm/mongodb'
 import { Category } from './entities/category.entity'
 
 describe('CategoriesController', () => {
-  let controller: CategoriesController;
+  let controller: CategoriesController
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -17,21 +17,22 @@ describe('CategoriesController', () => {
         Logger,
         CategoriesService,
         {
-          provide: EntityManager, useValue: MikroORM.init({
+          provide: EntityManager,
+          useValue: MikroORM.init({
             ...defineConfig({
               clientUrl: 'test',
               entities: [Category],
-              connect: false
-            },)
-          })
+              connect: false,
+            }),
+          }),
         },
       ],
-    }).compile();
+    }).compile()
 
-    controller = module.get<CategoriesController>(CategoriesController);
-  });
+    controller = module.get<CategoriesController>(CategoriesController)
+  })
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
+    expect(controller).toBeDefined()
+  })
+})

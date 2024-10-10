@@ -3,7 +3,7 @@ ARG IMAGE=node:18.20.4-alpine
 ### STAGE Restore ###
 FROM $IMAGE AS base
 
-ENV APPDIR /usr/app
+ENV APPDIR=/usr/app
 
 RUN mkdir -p ${APPDIR}
 
@@ -34,7 +34,7 @@ ARG VERSION="develop"
 ENV NODE_ENV=${NODE_ENV}
 ENV VERSION=${VERSION}
 
-ENV APPDIR /usr/app
+ENV APPDIR=/usr/app
 
 RUN mkdir -p ${APPDIR} && chown node:node ${APPDIR}
 

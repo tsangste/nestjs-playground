@@ -8,7 +8,10 @@ import { UpdateCategoryDto } from './dto/update-category.dto'
 
 @Injectable()
 export class CategoriesService {
-  constructor(@Inject(Logger) private readonly logger: LoggerService, private readonly em: EntityManager) {}
+  constructor(
+    @Inject(Logger) private readonly logger: LoggerService,
+    private readonly em: EntityManager
+  ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     this.logger.debug({

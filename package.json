@@ -39,7 +39,7 @@
     "@nestjs/swagger": "^7.0.0",
     "class-validator": "^0.14.0",
     "nest-winston": "^1.6.4",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2.0",
     "rxjs": "^7.2.0",
     "winston": "^3.3.3"
   },

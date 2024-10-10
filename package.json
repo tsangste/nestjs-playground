@@ -21,8 +21,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
+    "test:ci": "jest --coverage --ci --reporters=default",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json  --runInBand",
+    "test:all:local": "npm run lint && npm run test:ci && npm run test:e2e",
+    "test:all": "docker compose -f ./docker-compose.yml -f docker-compose.dep.yml -f ./docker-compose.ci.yml -p app-ci up --build --abort-on-container-exit --exit-code-from app --timeout 600 && docker compose -p app-ci down"
   },
   "dependencies": {
     "@mikro-orm/core": "^5.7.14",

@@ -1,15 +1,14 @@
 services:
   app:
-    command: run start:debug:local
-    restart: always
+    build:
+      context: .
+      target: command
+    command: run test:all:local
     environment:
       - LOG_LEVEL=debug
       - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
     volumes:
-      - .:/usr/app
-      - /usr/app/node_modules
+      - ./coverage:/usr/app/coverage
+      - ./jest:/usr/app/jest
     depends_on:
       - mongo
-    ports:
-      - '9229:9229'
-      - '3000:3000'

@@ -1,13 +1,19 @@
 services:
   app:
     command: run start:debug:local
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /usr/app/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
     restart: always
     environment:
       - LOG_LEVEL=debug
       - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
-    volumes:
-      - .:/usr/app
-      - /usr/app/node_modules
     depends_on:
       - mongo
     ports:

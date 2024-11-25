@@ -1,0 +1,7 @@
+.git
+coverage
+dist
+jest
+node_modules
+*Dockerfile*
+*docker-compose*

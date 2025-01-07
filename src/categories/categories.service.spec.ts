@@ -17,9 +17,10 @@ describe('CategoriesService', () => {
         CategoriesService,
         {
           provide: EntityManager,
-          useValue: MikroORM.init({
+          useValue: MikroORM.initSync({
             ...defineConfig({
-              clientUrl: 'test',
+              dbName: 'nest',
+              clientUrl: 'mongodb://127.0.0.1:27017',
               entities: [Category],
               connect: false,
             }),

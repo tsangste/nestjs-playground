@@ -1,52 +1,30 @@
-import { fileURLToPath } from 'node:url'
-import { dirname } from 'node:path'
-
+import eslint from '@eslint/js'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals'
-import js from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
-import tsParser from '@typescript-eslint/parser'
-import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import tseslint from 'typescript-eslint'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
-
-export default [
+export default tseslint.config(
   {
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
-    },
+    ignores: ['eslint.config.mjs']
   },
-  ...compat.extends('plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'),
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  eslintPluginPrettierRecommended,
   {
-    files: ['**/*.ts'],
-
-    plugins: {
-      '@typescript-eslint': typescriptEslint,
-    },
-
     languageOptions: {
       globals: {
         ...globals.node,
-        ...globals.jest,
+        ...globals.jest
       },
-
-      parser: tsParser,
       ecmaVersion: 5,
       sourceType: 'module',
-
       parserOptions: {
-        project: 'tsconfig.json',
-      },
-    },
-
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname
+      }
+    }
+  },
+  {
     rules: {
       semi: ['error', 'never'],
 
@@ -55,8 +33,8 @@ export default [
         {
           code: 120,
           ignoreUrls: true,
-          ignoreStrings: true,
-        },
+          ignoreStrings: true
+        }
       ],
 
       '@typescript-eslint/interface-name-prefix': 'off',
@@ -64,16 +42,22 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
 
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      "@typescript-eslint/no-unsafe-assignment": "warn",
+      "@typescript-eslint/no-unsafe-call": "warn",
+      "@typescript-eslint/no-unsafe-member-access": "warn",
+
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
           argsIgnorePattern: '^_',
-          ignoreRestSiblings: true,
-        },
+          ignoreRestSiblings: true
+        }
       ],
 
       '@typescript-eslint/no-misused-promises': 'error',
-      '@typescript-eslint/semi': 'off',
-    },
-  },
-]
+      '@typescript-eslint/semi': 'off'
+    }
+  }
+)

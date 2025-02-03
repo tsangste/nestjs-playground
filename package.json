@@ -28,8 +28,8 @@
     "test:all": "docker compose -f ./docker-compose.yml -f docker-compose.dep.yml -f ./docker-compose.ci.yml -p app-ci up --build --abort-on-container-exit --exit-code-from app --timeout 600 && docker compose -p app-ci down"
   },
   "dependencies": {
-    "@mikro-orm/core": "6.4.4",
-    "@mikro-orm/mongodb": "6.4.4",
+    "@mikro-orm/core": "6.4.5",
+    "@mikro-orm/mongodb": "6.4.5",
     "@mikro-orm/nestjs": "6.1.0",
     "@nestjs/common": "10.4.15",
     "@nestjs/config": "3.3.0",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.19.0",
-    "@mikro-orm/cli": "6.4.4",
+    "@mikro-orm/cli": "6.4.5",
     "@nestjs/cli": "10.4.9",
     "@nestjs/schematics": "10.2.3",
     "@nestjs/testing": "10.4.15",

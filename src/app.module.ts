@@ -2,7 +2,7 @@ import { Logger, Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { MikroOrmModule } from '@mikro-orm/nestjs'
-import { defineConfig } from '@mikro-orm/mongodb'
+import { defineConfig, Options } from '@mikro-orm/postgresql'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -17,18 +17,17 @@ import { CategoriesModule } from './categories/categories.module'
     }),
     MikroOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          ...defineConfig({
-            dbName: configService.get<string>('MONGODB_DATABASE', 'nest'),
-            clientUrl: configService.get<string>('MONGODB_CONNECTION_STRING', 'mongodb://127.0.0.1:27017'),
-            ensureIndexes: true,
-            driverOptions: { ignoreUndefined: true },
-            debug: configService.get<string>('NODE_ENV', 'local') !== 'production',
-          }),
-          autoLoadEntities: true,
-        }
-      },
+      useFactory: (configService: ConfigService) => ({
+        ...defineConfig({
+          host: configService.get<string>('POSTGRES_HOST', 'postgres'),
+          port: configService.get<number>('POSTGRES_PORT', 5432),
+          dbName: configService.get<string>('POSTGRES_DATABASE', 'app'),
+          user: configService.get<string>('POSTGRES_USER', 'postgres'),
+          password: configService.get<string>('POSTGRES_PASSWORD', 'postgres'),
+          debug: configService.get<string>('NODE_ENV', 'local') !== 'production',
+        } as Options),
+        autoLoadEntities: true,
+      }),
     }),
     CategoriesModule,
   ],

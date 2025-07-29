@@ -33,7 +33,8 @@ export default tseslint.config(
         {
           code: 120,
           ignoreUrls: true,
-          ignoreStrings: true
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true
         }
       ],
 

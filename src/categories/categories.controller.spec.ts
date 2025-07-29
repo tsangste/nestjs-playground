@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { Logger } from '@nestjs/common'
 
+import { EntityManager, MikroORM } from '@mikro-orm/core'
+import { defineConfig } from '@mikro-orm/postgresql'
+
 import { CategoriesController } from './categories.controller'
 import { CategoriesService } from './categories.service'
-import { EntityManager, MikroORM } from '@mikro-orm/core'
-import { defineConfig } from '@mikro-orm/mongodb'
 import { Category } from './entities/category.entity'
 
 describe('CategoriesController', () => {
@@ -20,8 +21,11 @@ describe('CategoriesController', () => {
           provide: EntityManager,
           useValue: MikroORM.initSync({
             ...defineConfig({
+              host: 'localhost',
+              port: 5432,
               dbName: 'nest',
-              clientUrl: 'mongodb://127.0.0.1:27017',
+              user: 'postgres',
+              password: 'postgres',
               entities: [Category],
               connect: false,
             }),

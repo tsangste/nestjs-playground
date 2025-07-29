@@ -6,7 +6,7 @@ export default defineConfig({
   port: Number(process.env.POSTGRES_PORT) || 5432,
   user: process.env.POSTGRES_USER || 'postgres',
   password: process.env.POSTGRES_PASSWORD || 'postgres',
-  dbName: process.env.POSTGRES_DATABASE || 'nest',
+  dbName: process.env.POSTGRES_DATABASE || 'app',
   debug: process.env.NODE_ENV !== 'production',
   extensions: [Migrator],
   entities: ['./**/*.entity.js'],

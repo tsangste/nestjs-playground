@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core'
 import { Logger, LoggerService } from '@nestjs/common'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { MikroORM } from '@mikro-orm/core'
 
 import { utilities, WinstonModule } from 'nest-winston'
-import * as winston from 'winston'
 
+import * as winston from 'winston'
 import { AppModule } from './app.module'
-import { MikroORM } from '@mikro-orm/core'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

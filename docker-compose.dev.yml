@@ -12,6 +12,7 @@ services:
           path: package.json
     restart: always
     environment:
+      - COMPOSE_MENU=true
       - LOG_LEVEL=debug
     depends_on:
       - postgres

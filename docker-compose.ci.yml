@@ -6,9 +6,8 @@ services:
     command: run test:all:local
     environment:
       - LOG_LEVEL=debug
-      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
     volumes:
       - ./coverage:/usr/app/coverage
       - ./jest:/usr/app/jest
     depends_on:
-      - mongo
+      - postgres

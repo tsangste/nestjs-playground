@@ -1,13 +1,9 @@
-import { Entity, PrimaryKey, Property, SerializedPrimaryKey } from '@mikro-orm/core'
-import { ObjectId } from '@mikro-orm/mongodb'
+import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 
 @Entity()
 export class Category {
-  @PrimaryKey()
-  _id: ObjectId
-
-  @SerializedPrimaryKey()
-  id!: string
+  @PrimaryKey({ autoincrement: true })
+  id!: bigint
 
   @Property()
   name: string

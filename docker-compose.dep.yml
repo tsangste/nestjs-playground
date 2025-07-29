@@ -1,11 +1,15 @@
 services:
-  mongo:
-    image: library/mongo:8.0.12
+  postgres:
+    image: postgres:16.3
     restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app
     volumes:
-      - mongo_store:/data/db
+      - postgres_store:/var/lib/postgresql/data
     ports:
-      - '21337:27017'
+      - '5440:5432'
 
 volumes:
-  mongo_store:
+  postgres_store:

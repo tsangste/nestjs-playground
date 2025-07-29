@@ -13,9 +13,8 @@ services:
     restart: always
     environment:
       - LOG_LEVEL=debug
-      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017
     depends_on:
-      - mongo
+      - postgres
     ports:
       - '9229:9229'
       - '3000:3000'

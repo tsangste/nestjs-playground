@@ -6,6 +6,7 @@ import { utilities, WinstonModule } from 'nest-winston'
 import * as winston from 'winston'
 
 import { AppModule } from './app.module'
+import { MikroORM } from '@mikro-orm/core'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -38,6 +39,17 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document)
 
   const logger = app.get<LoggerService>(Logger)
+
+  const orm = app.get(MikroORM)
+  const migrator = orm.getMigrator()
+  const executed = await migrator.getExecutedMigrations()
+  const pending = await migrator.getPendingMigrations()
+  logger.log({
+    message: `Migration UP`,
+    executed: executed.length,
+    pending: pending.length,
+  })
+  await migrator.up()
 
   await app.listen(3000)
 

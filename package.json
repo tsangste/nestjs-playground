@@ -42,7 +42,7 @@
     "nest-winston": "1.10.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
-    "winston": "3.17.0"
+    "winston": "3.18.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.1",

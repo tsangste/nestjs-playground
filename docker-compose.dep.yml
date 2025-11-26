@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: app
     volumes:
-      - postgres_store:/var/lib/postgresql/data
+      - postgres_store:/var/lib/postgresql
     ports:
       - '5440:5432'
 

@@ -41,7 +41,7 @@ async function bootstrap() {
   const logger = app.get<LoggerService>(Logger)
 
   const orm = app.get(MikroORM)
-  const migrator = orm.getMigrator()
+  const migrator = orm.migrator
   const executed = await migrator.getExecutedMigrations()
   const pending = await migrator.getPendingMigrations()
   logger.log({

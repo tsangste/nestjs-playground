@@ -61,6 +61,6 @@ export class CategoriesService {
     })
 
     const category = await this.findOne(id)
-    return this.em.removeAndFlush(category)
+    return this.em.remove(category).flush()
   }
 }
